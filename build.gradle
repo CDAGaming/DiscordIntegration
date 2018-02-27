@@ -8,14 +8,14 @@ buildscript {
   }
   dependencies {
     classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
-    classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.4'
-    classpath 'com.diffplug.spotless:spotless-plugin-gradle:3.4.1'
+    classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.2'
+    classpath 'com.diffplug.spotless:spotless-plugin-gradle:3.10.0'
   }
 }
 
 repositories {
   ivy {
-    name "CurseForge"
+    name = "CurseForge"
     artifactPattern 'http://addons-origin.cursecdn.com/files/[organisation]/[module]-[revision].[ext]'
   }
   jcenter()
@@ -30,7 +30,7 @@ apply plugin: 'java'
 apply plugin: 'com.diffplug.gradle.spotless'
 
 def mcVersion = '1.12.2'
-def forgeVersion = '14.23.1.2600'
+def forgeVersion = '14.23.2.2619'
 def modVersion = '3.0.4'
 
 version = 'mc' + mcVersion + '-' + modVersion
@@ -67,7 +67,7 @@ minecraft {
     runDir = 'run'
   }
 
-  mappings = "snapshot_20170624"
+  mappings = "snapshot_20180225"
 }
 
 def printDebug(message) {
@@ -105,27 +105,27 @@ class CurseForgeDependencyInfo {
 }
 
 // Dependencies on CurseForge
-List<CurseForgeDependencyInfo> curseForgeDependencies = new ArrayList<CurseForgeDependencyInfo>()
-curseForgeDependencies.add(new CurseForgeDependencyInfo("Dynmap", "2.6-beta-1-forge-1.12", "jar", "2436596"))
+//List<CurseForgeDependencyInfo> curseForgeDependencies = new ArrayList<CurseForgeDependencyInfo>()
+//curseForgeDependencies.add(new CurseForgeDependencyInfo("Dynmap", "2.6-beta-1-forge-1.12", "jar", "2436596"))
 
 dependencies {
-  compile files('./libs/JDA-3.3.1_280-withDependencies.jar')
-  compile 'com.vdurmont:emoji-java:3.3.0'
+  compile files('./libs/JDA-3.5.1_339-withDependencies.jar')
+  compile 'com.vdurmont:emoji-java:4.0.0'
 
-  // CurseForge
-  for (CurseForgeDependencyInfo dependency : curseForgeDependencies) {
-    if (file('../' + dependency.module).exists()) {
-      printDebug 'Using local ' + dependency.module + ' project'
-      compile project(':' + dependency.module)
-      continue
-    }
-    if (file('./' + dependency.module + '.jar').exists()) {
-      printDebug 'Using local ' + dependency.module + ' compiled jar'
-      compile files('./' + dependency.module + '.jar')
-      continue
-    }
-    compile group: dependency.GetFileId(), name: dependency.module, version: dependency.version, ext: dependency.ext
-  }
+//  CurseForge
+//  for (CurseForgeDependencyInfo dependency : curseForgeDependencies) {
+//    if (file('../' + dependency.module).exists()) {
+//      printDebug 'Using local ' + dependency.module + ' project'
+//      compile project(':' + dependency.module)
+//      continue
+//   }
+//    if (file('./' + dependency.module + '.jar').exists()) {
+//      printDebug 'Using local ' + dependency.module + ' compiled jar'
+//      compile files('./' + dependency.module + '.jar')
+//      continue
+//    }
+//    compile group: dependency.GetFileId(), name: dependency.module, version: dependency.version, ext: dependency.ext
+//  }
 
   // IntelliJ
   compile 'org.jetbrains:annotations:15.0'
@@ -155,8 +155,8 @@ shadowJar {
   relocate "org.apache.commons.logging", "chikachi.discord.repack.org.apache.commons.logging"
 
   dependencies {
-    include(dependency('net.dv8tion:JDA:3.3.1_280:withDependencies'))
-    include(dependency('com.vdurmont:emoji-java:3.3.0'))
+    include(dependency('net.dv8tion:JDA:3.5.1_339:withDependencies'))
+    include(dependency('com.vdurmont:emoji-java:4.0.0'))
   }
 }
 
@@ -173,7 +173,7 @@ processResources {
     expand 'version': modVersion, 'mcversion': project.minecraft.version
   }
 
-  // copy everything else, thats not the mcmod.info
+  // copy everything else, that's not the mcmod.info
   from(sourceSets.main.resources.srcDirs) {
     exclude 'mcmod.info'
   }
