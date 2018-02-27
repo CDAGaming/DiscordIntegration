@@ -67,7 +67,7 @@ minecraft {
     runDir = 'run'
   }
 
-  mappings = "snapshot_20180225"
+  mappings = "snapshot_20180226"
 }
 
 def printDebug(message) {
